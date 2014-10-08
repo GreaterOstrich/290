@@ -1,0 +1,17 @@
+protected void onHandleIntent(Intent intent) {
+
+	String msg = workIntent.getStringData();
+	public Handler myHandler
+	
+	@Override
+	public void run() {
+		Looper.prepare();
+		myHandler = newHandler {
+			protected void handleMessage(String msg) {
+				TextView tv = findViewById(R.id.msgView);
+				tv.setText(msg);
+			}
+		};
+		Looper.loop();
+	}
+}
