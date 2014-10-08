@@ -1,0 +1,41 @@
+CV cv;
+int availableSeats = 4;
+int availableBarbers = 4;
+int availableStand = 5;
+Lock lock;
+
+customer() {
+  lock.acquire();
+  
+  while(availableStand == 0) cv.wait();
+  
+  availableStand--;
+  
+  while(availableSeats == 0) cv.wait();
+  
+  availableStand++;
+  availableSeats--;
+  cv.broadcast();
+
+  while(availableBarbers == 0) cv.wait();
+
+  lock.release();
+}
+
+barber() {
+  while(1){
+    lock.acquire()
+    
+    while(availableSeats == 4) cv.wait();
+    
+    availableSeats++;
+    availableBarbers--;
+    
+    cut();
+    
+    availableBarbers++;
+    cv.broadcast();
+
+    lock.release();
+  }
+}
