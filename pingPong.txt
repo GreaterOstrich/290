@@ -1,0 +1,27 @@
+CV cv;
+Lock lock;
+boolean ping = true;
+
+ping() {
+  lock.acquire();
+  
+  while(!ping) cv.wait();
+  
+  println "Ping";
+  ping = false;
+  cv.broadcast();
+  
+  lock.release();
+}
+
+pong() {
+  lock.acquire();
+  
+  while(ping) cv.wait();
+  
+  println "Pong";
+  ping = true;
+  cv.broadcast();
+  
+  lock.release();
+}
